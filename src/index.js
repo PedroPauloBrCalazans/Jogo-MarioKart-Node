@@ -50,4 +50,12 @@ async function rollDice() {
   return Math.floor(Math.random() * 6) + 1; //floor arredonda
 }
 
-(async function main() {})(); // responsavel por chamar as outras funções, auto-invocável
+async function playRaceEngine(character1, character2) {}
+
+(async function main() {
+  console.log(
+    `🏁🚥 Corrida entre ${player3.nome} e ${player2.nome} começando...\n`
+  );
+
+  await playRaceEngine(player3, player2); // essa função vai esperar terminar de executar antes de fazer qualquer outro conteudo
+})(); // responsavel por chamar as outras funções, auto-invocável

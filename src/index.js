@@ -131,7 +131,68 @@ async function playRaceEngine(character1, character2) {
     if (block === "CONFRONTO") {
       let powerResult1 = diceResult1 + character1.poder;
       let powerResult2 = diceResult2 + character2.poder;
+
+      console.log(`${character1.nome} confrontou com ${character2.nome}! 🥊`);
+
+      await logRollResult(
+        character1.nome,
+        "poder",
+        diceResult1,
+        character1.poder
+      );
+
+      await logRollResult(
+        character2.nome,
+        "poder",
+        diceResult2,
+        character2.poder
+      );
+
+      if (powerResult1 > powerResult2 && character2.pontos > 0) {
+        console.log(
+          `${character1.nome} venceu o confronto! ${character2.nome} perdeu 1 ponto 🐢`
+        );
+        character2.pontos--;
+      }
+
+      if (powerResult2 > powerResult1 && character1.pontos > 0) {
+        console.log(
+          `${character2.nome} venceu o confronto! ${character1.nome} perdeu 1 ponto 🐢`
+        );
+        character1.pontos--;
+      }
+
+      console.log(
+        powerResult2 === powerResult1
+          ? "Confronto empatado! Nenhum ponto foi perdido"
+          : ""
+      );
     }
+
+    //verificando o vencedor
+    if (totalTestSkill1 > totalTestSkill2) {
+      console.log(`${character1.nome} marcou um ponto!`);
+      character1.pontos++;
+    } else if (totalTestSkill2 > totalTestSkill1) {
+      console.log(`${character2.nome} marcou um ponto!`);
+      character2.pontos++;
+    }
+
+    console.log("--------------------------------------------------------");
+  }
+}
+
+async function declareWinner(character1, character2) {
+  console.log("Resultado final:");
+  console.log(`${character1.nome}: ${character1.pontos} ponto(s)`);
+  console.log(`${character2.nome}: ${character2.pontos} ponto(s)`);
+
+  if (character1.pontos > character2.pontos) {
+    console.log(`\n${character1.nome} venceu a corrida! 🏆`);
+  } else if (character2.pontos > character1.pontos) {
+    console.log(`\n${character2.nome} venceu a corrida! 🏆`);
+  } else {
+    console.log("A corrida terminou em empate");
   }
 }
 
@@ -141,4 +202,5 @@ async function playRaceEngine(character1, character2) {
   );
 
   await playRaceEngine(player1, player2); // essa função vai esperar terminar de executar antes de fazer qualquer outro conteudo
+  await declareWinner(player1, player2);
 })(); // responsavel por chamar as outras funções, auto-invocável
